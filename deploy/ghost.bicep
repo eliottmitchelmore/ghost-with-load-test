@@ -96,7 +96,7 @@ module webApp './modules/webApp.bicep' = {
   name: 'webAppDeploy'
   params: {
     webAppName: webAppName
-    frontDoorID: frontDoor.outputs.id
+    fdName: frontDoorName
     appServicePlanId: appServicePlan.outputs.id
     ghostContainerImage: ghostContainerName
     storageAccountName: storageAccount.outputs.name

@@ -163,4 +163,4 @@ resource wafPolicy 'Microsoft.Network/FrontDoorWebApplicationFirewallPolicies@20
 }
 
 output frontendEndpointHostName string = frontendEndpoint1hostName
-output id string = frontDoor.id
+
