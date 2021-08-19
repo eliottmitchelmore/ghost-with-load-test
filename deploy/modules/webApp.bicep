@@ -4,6 +4,8 @@ targetScope = 'resourceGroup'
 @maxLength(60)
 param webAppName string
 
+param frontDoorID string
+
 @description('Location to deploy the resources')
 param location string = resourceGroup().location
 
@@ -82,6 +84,11 @@ resource siteConfig 'Microsoft.Web/sites/config@2021-01-15' = if (deploymentConf
         priority: 300
         name: 'Access from Azure Front Door'
         description: 'Rule for access from Azure Front Door'
+        headers: {
+          'x-azure-fdid': [
+            frontDoorID
+          ]
+        }
       }
     ]
   }
