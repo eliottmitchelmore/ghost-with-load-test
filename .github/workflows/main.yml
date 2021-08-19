@@ -19,5 +19,6 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
+        databasePassword: ${{ secrets.GHOST_MYSQL_PASSWORD }}
         template: ./deploy/ghost.bicep
         failOnStdErr: false
