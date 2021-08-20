@@ -1,5 +1,5 @@
 on: [push]
-name: Azure ARM
+name: Deploy Ghost to Azure
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
