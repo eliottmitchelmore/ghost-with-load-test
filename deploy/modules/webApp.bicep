@@ -4,8 +4,6 @@ targetScope = 'resourceGroup'
 @maxLength(60)
 param webAppName string
 
-param fdName string
-
 @description('Location to deploy the resources')
 param location string = resourceGroup().location
 
@@ -29,12 +27,6 @@ param fileShareName string
 
 @description('Path to mount the file share in the container')
 param containerMountPath string
-
-@allowed([
-  'Web app with Azure CDN'
-  'Web app with Azure Front Door'
-])
-param deploymentConfiguration string
 
 var containerImageReference = 'DOCKER|${ghostContainerImage}'
 
@@ -72,27 +64,7 @@ resource webApp 'Microsoft.Web/sites@2021-01-15' = {
   }
 }
 
-resource siteConfig 'Microsoft.Web/sites/config@2021-01-15' = if (deploymentConfiguration == 'Web app with Azure Front Door') {
-  parent: webApp
-  name: 'web'
-  properties: {
-    ipSecurityRestrictions: [
-      {
-        ipAddress: 'AzureFrontDoor.Backend'
-        action: 'Allow'
-        tag: 'ServiceTag'
-        priority: 300
-        name: 'Access from Azure Front Door'
-        description: 'Rule for access from Azure Front Door'
-        headers: {
-          'x-azure-fdid': [
-            resourceId('Microsoft.Network/frontdoors', fdName)
-          ]
-        }
-      }
-    ]
-  }
-}
+
 
 resource webAppDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
   scope: webApp

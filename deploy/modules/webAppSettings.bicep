@@ -2,6 +2,14 @@ targetScope = 'resourceGroup'
 
 param webAppName string
 
+param fdId string
+
+@allowed([
+  'Web app with Azure CDN'
+  'Web app with Azure Front Door'
+])
+param deploymentConfiguration string
+
 param applicationInsightsInstrumentationKey string
 
 param applicationInsightsConnectionString string
@@ -54,5 +62,27 @@ resource webAppSettings 'Microsoft.Web/sites/config@2021-01-15' = {
     database__connection__database: databaseName
     database__connection__ssl: 'true'
     database__connection__ssl_minVersion: 'TLSv1.2'
+  }
+}
+
+resource siteConfig 'Microsoft.Web/sites/config@2021-01-15' = if (deploymentConfiguration == 'Web app with Azure Front Door') {
+  parent: existingWebApp
+  name: 'web'
+  properties: {
+    ipSecurityRestrictions: [
+      {
+        ipAddress: 'AzureFrontDoor.Backend'
+        action: 'Allow'
+        tag: 'ServiceTag'
+        priority: 300
+        name: 'Access from Azure Front Door'
+        description: 'Rule for access from Azure Front Door'
+        headers: {
+          'x-azure-fdid': [
+            fdId
+          ]
+        }
+      }
+    ]
   }
 }

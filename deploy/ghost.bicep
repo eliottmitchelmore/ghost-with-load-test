@@ -96,7 +96,6 @@ module webApp './modules/webApp.bicep' = {
   name: 'webAppDeploy'
   params: {
     webAppName: webAppName
-    fdName: frontDoorName
     appServicePlanId: appServicePlan.outputs.id
     ghostContainerImage: ghostContainerName
     storageAccountName: storageAccount.outputs.name
@@ -105,7 +104,6 @@ module webApp './modules/webApp.bicep' = {
     containerMountPath: ghostContentFilesMountPath
     location: location
     logAnalyticsWorkspaceId: logAnalyticsWorkspace.outputs.id
-    deploymentConfiguration: deploymentConfiguration
   }
 }
 
@@ -113,6 +111,7 @@ module webAppSettings 'modules/webAppSettings.bicep' = {
   name: 'webAppSettingsDeploy'
   params: {
     webAppName: webApp.outputs.name
+    fdId: frontDoor.outputs.id
     applicationInsightsConnectionString: applicationInsights.outputs.ConnectionString
     applicationInsightsInstrumentationKey: applicationInsights.outputs.InstrumentationKey
     containerRegistryUrl: containerRegistryUrl
@@ -122,6 +121,7 @@ module webAppSettings 'modules/webAppSettings.bicep' = {
     databasePasswordSecretUri: keyVault.outputs.databasePasswordSecretUri
     databaseName: databaseName
     siteUrl: siteUrl
+    deploymentConfiguration: deploymentConfiguration
   }
 }
 
