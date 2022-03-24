@@ -1,6 +1,5 @@
 # Demo for Azure Load Testing
 
-
 Azure resources are deployed using Bicep templates based on [@andrewmatveychuk/azure.ghost-web-app-for-containers](https://github.com/andrewmatveychuk/azure.ghost-web-app-for-containers).
 
 Deployment credentials are stored in Secrets.  See https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/deploy-github-actions on how to create the necessary credentials.
