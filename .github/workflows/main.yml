@@ -22,3 +22,14 @@ jobs:
         template: ./deploy/ghost.bicep
         parameters: databasePassword=${{ secrets.GHOST_MYSQL_PASSWORD }}
         failOnStdErr: false
+        
+  load-test:
+    runs-on: ubuntu-latest
+    steps:
+    
+      # Azure Load Testing
+      uses: azure/load-testing@v1
+      with:
+        loadTestConfigFile: 'testconfig.yml'
+        loadTestResource: 'ltdemo'
+        resourceGroup: ${{ secrets.AZURE_RG }}
