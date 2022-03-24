@@ -23,4 +23,15 @@ jobs:
         parameters: databasePassword=${{ secrets.GHOST_MYSQL_PASSWORD }}
         failOnStdErr: false
         
+  load-test:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+    
+      # Azure Load Testing
+      uses: azure/load-testing@v1
+      with:
+        loadTestConfigFile: ./test/config.yaml
+        loadTestResource: 'ltdemo'
+        resourceGroup: ${{ secrets.AZURE_RG }}        
 
