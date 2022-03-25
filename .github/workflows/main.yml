@@ -36,7 +36,7 @@ jobs:
       # Azure Load Testing
       - uses: azure/load-testing@v1
         with:
-          loadTestConfigFile: './config.yaml'
+          loadTestConfigFile: 'testconfig.yaml'
           loadTestResource: 'ltdemo'
           resourceGroup: ${{ secrets.AZURE_RG }}        
 
