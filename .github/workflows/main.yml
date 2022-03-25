@@ -24,7 +24,7 @@ jobs:
  #       failOnStdErr: false
         
   load-test:
-    needs: build-and-deploy
+#    needs: build-and-deploy
     runs-on: ubuntu-latest
     steps:
     
